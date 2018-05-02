@@ -1,0 +1,9 @@
+participant.id_in_session,participant.code,participant.label,participant._is_bot,participant._index_in_pages,participant._max_page_index,participant._current_app_name,participant._round_number,participant._current_page_name,participant.ip_address,participant.time_started,participant.visited,participant.mturk_worker_id,participant.mturk_assignment_id,participant.payoff,player.id_in_group,player.contribution,player.subsession_id,player.group_id,player.payoff,group.id_in_subsession,group.total_contribution,group.individual_share,group.subsession_id,subsession.round_number,session.code,session.label,session.experimenter_name,session.mturk_HITId,session.mturk_HITGroupId,session.comment,session.is_demo
+1,ty6vljmn,,0,31,30,survey,1,CognitiveReflectionTest,10.192.106.12,2018-04-25 12:27:15.165229+00:00,1,,,276,1,100,1,1,113,1,225,113,1,1,56nqyqj7,,,,,,0
+2,ccgu9x5y,,0,31,30,survey,1,CognitiveReflectionTest,10.192.100.218,2018-04-25 12:27:29.968315+00:00,1,,,446,2,50,1,1,163,1,225,113,1,1,56nqyqj7,,,,,,0
+3,nbv7cre1,,0,31,30,survey,1,CognitiveReflectionTest,10.192.42.141,2018-04-25 12:27:57.871255+00:00,1,,,431,3,25,1,1,188,1,225,113,1,1,56nqyqj7,,,,,,0
+4,1ot6syka,,0,31,30,survey,1,CognitiveReflectionTest,10.192.84.64,2018-04-25 12:27:59.977217+00:00,1,,,401,4,50,1,1,163,1,225,113,1,1,56nqyqj7,,,,,,0
+1,ty6vljmn,,0,31,30,survey,1,CognitiveReflectionTest,10.192.106.12,2018-04-25 12:27:15.165229+00:00,1,,,276,1,100,2,2,113,1,225,113,2,2,56nqyqj7,,,,,,0
+2,ccgu9x5y,,0,31,30,survey,1,CognitiveReflectionTest,10.192.100.218,2018-04-25 12:27:29.968315+00:00,1,,,446,2,0,2,2,213,1,225,113,2,2,56nqyqj7,,,,,,0
+3,nbv7cre1,,0,31,30,survey,1,CognitiveReflectionTest,10.192.42.141,2018-04-25 12:27:57.871255+00:00,1,,,431,3,50,2,2,163,1,225,113,2,2,56nqyqj7,,,,,,0
+4,1ot6syka,,0,31,30,survey,1,CognitiveReflectionTest,10.192.84.64,2018-04-25 12:27:59.977217+00:00,1,,,401,4,75,2,2,138,1,225,113,2,2,56nqyqj7,,,,,,0
