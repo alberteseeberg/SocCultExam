@@ -1,0 +1,9 @@
+participant.id_in_session;participant.code;participant.label;participant._is_bot;participant._index_in_pages;participant._max_page_index;participant._current_app_name;participant._round_number;participant._current_page_name;participant.ip_address;participant.time_started;participant.visited;participant.mturk_worker_id;participant.mturk_assignment_id;participant.payoff;player.id_in_group;player.contribution;player.subsession_id;player.group_id;player.payoff;group.id_in_subsession;group.total_contribution;group.individual_share;group.subsession_id;subsession.round_number;session.code;session.label;session.experimenter_name;session.mturk_HITId;session.mturk_HITGroupId;session.comment;session.is_demo
+1;0by6lfut;;0;33;32;ultimatum;2;Results;10.192.8.216;2018-04-26 08:56:17.438410+00:00;1;;;631;1;70;1;1;153;1;245;123;1;1;4narc4e0;;;;;;0
+2;9kzor8me;;0;33;32;ultimatum;2;Results;10.192.107.180;2018-04-26 08:56:48.551697+00:00;1;;;591;2;50;1;1;173;1;245;123;1;1;4narc4e0;;;;;;0
+3;glecrfmg;;0;33;32;ultimatum;2;Results;10.192.124.63;2018-04-26 08:56:01.237840+00:00;1;;;541;3;75;1;1;148;1;245;123;1;1;4narc4e0;;;;;;0
+4;1teu419h;;0;33;32;ultimatum;2;Results;10.192.29.125;2018-04-26 08:55:07.754727+00:00;1;;;561;4;50;1;1;173;1;245;123;1;1;4narc4e0;;;;;;0
+1;0by6lfut;;0;33;32;ultimatum;2;Results;10.192.8.216;2018-04-26 08:56:17.438410+00:00;1;;;631;1;80;2;2;168;1;295;148;2;2;4narc4e0;;;;;;0
+2;9kzor8me;;0;33;32;ultimatum;2;Results;10.192.107.180;2018-04-26 08:56:48.551697+00:00;1;;;591;2;90;2;2;158;1;295;148;2;2;4narc4e0;;;;;;0
+3;glecrfmg;;0;33;32;ultimatum;2;Results;10.192.124.63;2018-04-26 08:56:01.237840+00:00;1;;;541;3;60;2;2;188;1;295;148;2;2;4narc4e0;;;;;;0
+4;1teu419h;;0;33;32;ultimatum;2;Results;10.192.29.125;2018-04-26 08:55:07.754727+00:00;1;;;561;4;65;2;2;183;1;295;148;2;2;4narc4e0;;;;;;0
