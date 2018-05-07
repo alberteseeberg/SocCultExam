@@ -16,7 +16,10 @@ knitr::opts_chunk$set(echo = TRUE)
 setwd("~/Desktop/Exam SocCult/SocCultExam")
 
 library(dplyr)
-
+library(tidyverse)
+library(rethinking)
+library(ggplot2)
+library(cowplot)
 
 
 Ultimatum <- do.call("rbind", lapply( list.files("~/Desktop/Exam SocCult/SocCultExam/Ultimatum",full=TRUE),
@@ -55,10 +58,65 @@ PG2=merge(PG_R2, Winners, by="participant.code")
 PG1=PG1[,c(1,2,15,16,17,20,22,23,26,33)]
 PG2=PG2[,c(1,2,15,16,17,20,22,23,26,33)]
 
+
+
 ```
 
 
 ```{r}
+
+glimmer(player.contribution~team, PG1)
+
+model1=map(
+alist(
+player.contribution ~ dnorm( mu , sigma ),
+mu <- Intercept +
+b_team*team,
+Intercept ~ dnorm(50,50),
+b_team ~ dnorm(0,15),
+sigma ~ dunif(0,50)
+),
+data=PG1)
+
+
+precis1=precis(model1)
+
+precis1
+plot(precis1)
+
+
+post=extract.samples(model1)
+mu.team=post$Intercept+post$b_team
+PI(mu.team)
+
+
+
+
+
+model2=map(
+alist(
+player.contribution ~ dnorm( mu , sigma ),
+mu <- Intercept +
+b_team*team,
+Intercept ~ dnorm(0,20),
+b_team ~ dnorm(0,20),
+sigma ~ dcauchy(0,5)
+),
+data=PG2)
+
+precis2=precis(model2)
+
+plot(precis2)
+
+
+
+#Histograms
+simplehist(PG1$player.contribution[PG1$team=="1"], xlim=c(0,100) , xlab="Contribution")
+
+
+simplehist(PG1$player.contribution[PG1$team=="2"], xlim=c(0,100) , xlab="Contribution")
+
+
 
 ```
 
