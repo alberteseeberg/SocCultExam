@@ -1,0 +1,9 @@
+participant.id_in_session,participant.code,participant.label,participant._is_bot,participant._index_in_pages,participant._max_page_index,participant._current_app_name,participant._round_number,participant._current_page_name,participant.ip_address,participant.time_started,participant.visited,participant.mturk_worker_id,participant.mturk_assignment_id,participant.payoff,player.id_in_group,player.contribution,player.subsession_id,player.group_id,player.payoff,group.id_in_subsession,group.total_contribution,group.individual_share,group.subsession_id,subsession.round_number,session.code,session.label,session.experimenter_name,session.mturk_HITId,session.mturk_HITGroupId,session.comment,session.is_demo
+1,37q83yj7,,0,31,30,survey,1,CognitiveReflectionTest,192.168.38.103,2018-05-02 18:52:53.735046+00:00,1,,,471,1,0,1,1,163,1,125,63,1,1,dmmxdden,,,,,,0
+2,em3gkorh,,0,31,30,survey,1,CognitiveReflectionTest,192.168.38.101,2018-05-02 18:53:29.580301+00:00,1,,,341,2,25,1,1,138,1,125,63,1,1,dmmxdden,,,,,,0
+3,nmea8on7,,0,31,30,survey,1,CognitiveReflectionTest,192.168.38.102,2018-05-02 18:53:51.674324+00:00,1,,,411,3,20,1,1,143,1,125,63,1,1,dmmxdden,,,,,,0
+4,6gdhpwk7,,0,31,30,survey,1,CognitiveReflectionTest,192.168.38.104,2018-05-02 18:53:31.617844+00:00,1,,,241,4,80,1,1,83,1,125,63,1,1,dmmxdden,,,,,,0
+1,37q83yj7,,0,31,30,survey,1,CognitiveReflectionTest,192.168.38.103,2018-05-02 18:52:53.735046+00:00,1,,,471,1,0,2,2,168,1,135,68,2,2,dmmxdden,,,,,,0
+2,em3gkorh,,0,31,30,survey,1,CognitiveReflectionTest,192.168.38.101,2018-05-02 18:53:29.580301+00:00,1,,,341,2,25,2,2,143,1,135,68,2,2,dmmxdden,,,,,,0
+3,nmea8on7,,0,31,30,survey,1,CognitiveReflectionTest,192.168.38.102,2018-05-02 18:53:51.674324+00:00,1,,,411,3,30,2,2,138,1,135,68,2,2,dmmxdden,,,,,,0
+4,6gdhpwk7,,0,31,30,survey,1,CognitiveReflectionTest,192.168.38.104,2018-05-02 18:53:31.617844+00:00,1,,,241,4,80,2,2,88,1,135,68,2,2,dmmxdden,,,,,,0

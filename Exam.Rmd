@@ -72,8 +72,8 @@ alist(
 player.contribution ~ dnorm( mu , sigma ),
 mu <- Intercept +
 b_team*team,
-Intercept ~ dnorm(50,50),
-b_team ~ dnorm(0,15),
+Intercept ~ dnorm(42.89,20),
+b_team ~ dnorm(11.77,10),
 sigma ~ dunif(0,50)
 ),
 data=PG1)
@@ -85,10 +85,50 @@ precis1
 plot(precis1)
 
 
+# To plot the model
+Team.seq <- seq( from=-10 , to=15 , by=0.1 )
+
+mu <- link( mVerbalIQ , data=data.frame(VerbalIQ=ScaleVIQ.seq) )
+str(mu)
+mu.mean <- apply( mu , 2 , mean )
+mu.HPDI <- apply( mu , 2 , HPDI , prob=0.89 )
+
+sim.ados <- sim(mVerbalIQ , data=list(VerbalIQ=ScaleVIQ.seq) )
+#summarizing the distribution of the simulation
+ados.HPDI <- apply( sim.ados , 2 , HPDI , prob=0.89 )
+
+
+# plot raw data
+plot(ADOS ~ VerbalIQ , scaledata , col=col.alpha(rangi2,0.5) )
+# draw MAP line
+lines( ScaleVIQ.seq , mu.mean )
+# draw HPDI region for line
+shade(mu.HPDI , ScaleVIQ.seq)
+# draw PI region for simulated heights
+shade(ados.HPDI , ScaleVIQ.seq)
+
+
+
 post=extract.samples(model1)
 mu.team=post$Intercept+post$b_team
 PI(mu.team)
 
+#Models from book
+
+model3 <- map(
+    alist(
+         player.contribution ~ dbinom( nrow(PG1) , p ) ,
+         logit(p) <- a + bm*male ,
+         a ~ dnorm(0,10) ,
+         bm ~ dnorm(0,10)
+),
+    data=d )
+model4 <- map(
+    alist(
+         admit ~ dbinom( applications , p ) ,
+         logit(p) <- a ,
+         a ~ dnorm(0,10)
+), data=d )
 
 
 
@@ -105,6 +145,7 @@ sigma ~ dcauchy(0,5)
 data=PG2)
 
 precis2=precis(model2)
+precis2
 
 plot(precis2)
 
@@ -116,8 +157,14 @@ simplehist(PG1$player.contribution[PG1$team=="1"], xlim=c(0,100) , xlab="Contrib
 
 simplehist(PG1$player.contribution[PG1$team=="2"], xlim=c(0,100) , xlab="Contribution")
 
+plot2 = dens(PG1$player.contribution[PG1$team=="2"], xlim=c(0,100) , xlab="Contribution", show.HPDI=TRUE, col="red")
+
+plot1 = dens(PG1$player.contribution[PG1$team=="1"], xlim=c(0,100) , xlab="Contribution", show.HPDI=TRUE, add=TRUE)
 
 
+plot2 = dens(PG2$player.contribution[PG2$team=="2"], xlim=c(0,100) , xlab="Contribution", show.HPDI=TRUE, col="red")
+
+plot1 = dens(PG2$player.contribution[PG2$team=="1"], xlim=c(0,100) , xlab="Contribution", show.HPDI=TRUE, add=TRUE)
 ```
 
 
