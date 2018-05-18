@@ -87,7 +87,7 @@ sigma ~ dunif(0,50)
 data=PG2)
 
 
-precis1=precis(model1)
+precis1=precis(model1, depth=2)
 
 precis1
 plot(precis1)
