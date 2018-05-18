@@ -25,6 +25,12 @@ library(cowplot)
 Ultimatum <- do.call("rbind", lapply( list.files("~/Desktop/Exam SocCult/SocCultExam/Ultimatum",full=TRUE),
 		read.csv, header=TRUE))
 
+UG3=read.csv("ultimatumS3_p.csv", sep=";")
+UG11=read.csv("ultimatum11.csv", sep=";")
+
+Ultimatum=rbind(Ultimatum, UG3)
+Ultimatum=rbind(Ultimatum, UG11)
+
 Survey <- do.call("rbind", lapply( list.files("~/Desktop/Exam SocCult/SocCultExam/Survey",full=TRUE),
 		read.csv, header=TRUE))
 
