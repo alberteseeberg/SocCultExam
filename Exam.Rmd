@@ -64,24 +64,47 @@ PG2=merge(PG_R2, Winners, by="participant.code")
 PG1=PG1[,c(1,2,15,16,17,20,22,23,26,33)]
 PG2=PG2[,c(1,2,15,16,17,20,22,23,26,33)]
 
+PG1$round=1
+PG2$round=2
+
+alldata=rbind(PG1,PG2)
 
 
 ```
 
 
 ```{r}
+#Finding mean contribution from winners and loosers 
 mean(alldata$player.contribution[alldata$team=="1"])
 mean(alldata$player.contribution[alldata$team=="2"])
 
+#Density plot for contributions of winners and loosers including HPDI
 plot6 = dens(alldata$player.contribution[alldata$team=="1"], xlim=c(0,100) , xlab="Contribution", show.HPDI=0.50, col="red")
 
 plot5 = dens(alldata$player.contribution[alldata$team=="2"], xlim=c(0,100) , xlab="Contribution", show.HPDI=0.50, add=TRUE)
 
+#Calculating HPDI
 HPDI(alldata$player.contribution[alldata$team=="1"], prob=0.50)
 HPDI(alldata$player.contribution[alldata$team=="2"], prob=0.50)
 
-glimmer(player.contribution~team, alldata)
+#Intercept only model
+model1=map(
+alist(
+player.contribution ~ dnorm( mu , sigma ),
+mu <- Interceptall+Intercept[session.code],
+Interceptall ~ dnorm(50,20),
+Intercept[session.code] ~ dnorm(0,10),
+sigma ~ dunif(0,50)
+),
+data=alldata)
 
+
+precis1=precis(model1)
+
+precis1
+plot(precis1)
+
+#Model with teams as predictive variable
 model2=map(
 alist(
 player.contribution ~ dnorm( mu , sigma ),
@@ -101,104 +124,13 @@ precis2=precis(model2)
 precis2
 plot(precis2)
 
+#simulating how new data might look like from samples from our data
 x=extract.samples(model2)
 
 sum(x$b_teamall<0)/10000
 #0.79
 
-
-model1=map(
-alist(
-player.contribution ~ dnorm( mu , sigma ),
-mu <- Interceptall+Intercept[session.code],
-Interceptall ~ dnorm(50,20),
-Intercept[session.code] ~ dnorm(0,10),
-sigma ~ dunif(0,50)
-),
-data=alldata)
-
-
-precis1=precis(model1)
-
-precis1
-plot(precis1)
-
-
-compare(model1,model2)
-plot(compare(model1, model2))
-
-coeftab(model1, model2)
-plot(coeftab(model1,model2))
-
-#Observed vs predicted contributions
-mu <- link( model1)
-# calculating mean and HPDI for each data point
-mu.mean <- apply( mu , 2 , mean )
-mu.HPDI <- apply( mu , 2 , HPDI )
-# simulate observations
-cont.sim <- sim( model1 , n=1e4 )
-cont.HPDI <- apply( cont.sim , 2 , HPDI )
-
-#plotting
-plot( mu.mean ~ alldata$player.contribution , col=rangi2 , ylim=range(mu.HPDI) ,
-xlab="Observed contribution" , ylab="Predicted contribution" )
-abline( a=0 , b=1 , lty=2 )
-for ( i in 1:nrow(alldata) )
-lines( rep(alldata$player.contribution[i],2) , c(mu.HPDI[1,i],mu.HPDI[2,i]) ,
-col=rangi2 )
-
-
-
-
-# model2=map(
-# alist(
-# player.contribution ~ dnorm( mu , sigma ),
-# mu <- Intercept +
-# b_team*team,
-# Intercept ~ dnorm(0,20),
-# b_team ~ dnorm(0,20),
-# sigma ~ dcauchy(0,5)
-# ),
-# data=PG2)
-# 
-# precis2=precis(model2)
-# precis2
-# 
-# plot(precis2)
-
-
-
-#Histograms for round 1
-simplehist(PG1$player.contribution[PG1$team=="1"], xlim=c(0,100) , xlab="Contribution")
-
-
-simplehist(PG1$player.contribution[PG1$team=="2"], xlim=c(0,100) , xlab="Contribution")
-
-
-#Density plots for round 1, including HPDI
-plot2 = dens(PG1$player.contribution[PG1$team=="2"], xlim=c(0,100) , xlab="Contribution", show.HPDI=0.50, col="red")
-
-plot1 = dens(PG1$player.contribution[PG1$team=="1"], xlim=c(0,100) , xlab="Contribution", show.HPDI=0.50, add=TRUE)
-
-#Density plots for round 2, including HPDI
-plot3 = dens(PG2$player.contribution[PG2$team=="2"], xlim=c(0,100) , xlab="Contribution", show.HPDI=0.50, col="red")
-
-plot4 = dens(PG2$player.contribution[PG2$team=="1"], xlim=c(0,100) , xlab="Contribution", show.HPDI=0.50, add=TRUE)
-
-#Round 1 PI
-PI(PG1$player.contribution[PG1$team=="1"], prob=0.5)
-PI(PG1$player.contribution[PG1$team=="2"], prob=0.5)
-
-#Round 2 PI
-PI(PG2$player.contribution[PG2$team=="1"], prob=0.5)
-PI(PG2$player.contribution[PG2$team=="2"], prob=0.5)
-
-
-PG1$round=1
-PG2$round=2
-
-alldata=rbind(PG1,PG2)
-
+#Model with interaction effect between teams and rounds
 model3=map(
 alist(
 player.contribution ~ dnorm( mu , sigma ),
@@ -224,9 +156,66 @@ precis3
 plot(precis3)
 
 
+
+
+#Comparing models 1, 2, and 3
+
+beta1 <- coeftab(model1, model2, model3)
+pars1 <- c("Interceptall", "b_teamall", "b_roundall", "b_interactionall", "sigma")
+coeftab_plot(beta1, NULL , pars1, col.ci="rosybrown4", by.model=FALSE , prob=0.89)
+
 models=compare(model1, model2, model3)
 models
 plot(models)
+
+
+#Observed vs predicted contributions model 1
+mu <- link( model1)
+# calculating mean and HPDI for each data point
+mu.mean <- apply( mu , 2 , mean )
+mu.HPDI <- apply( mu , 2 , HPDI )
+# simulate observations
+cont.sim <- sim( model1 , n=1e4 )
+cont.HPDI <- apply( cont.sim , 2 , HPDI )
+
+#plotting
+plot( mu.mean ~ alldata$player.contribution , col=rangi2 , ylim=range(mu.HPDI) ,
+xlab="Observed contribution" , ylab="Predicted contribution" )
+abline( a=0 , b=1 , lty=2 )
+for ( i in 1:nrow(alldata) )
+lines( rep(alldata$player.contribution[i],2) , c(mu.HPDI[1,i],mu.HPDI[2,i]) ,
+col=rangi2 )
+
+#Observed vs predicted contributions model 2
+mu <- link( model2)
+# calculating mean and HPDI for each data point
+mu.mean <- apply( mu , 2 , mean )
+mu.HPDI <- apply( mu , 2 , HPDI )
+# simulate observations
+cont.sim <- sim( model2 , n=1e4 )
+cont.HPDI <- apply( cont.sim , 2 , HPDI )
+
+#plotting
+plot( mu.mean ~ alldata$player.contribution , col=rangi2 , ylim=range(mu.HPDI) ,
+xlab="Observed contribution" , ylab="Predicted contribution" )
+abline( a=0 , b=1 , lty=2 )
+for ( i in 1:nrow(alldata) )
+lines( rep(alldata$player.contribution[i],2) , c(mu.HPDI[1,i],mu.HPDI[2,i]) ,
+col=rangi2 )
+
+
+# #Density plots for round 1, including HPDI
+# plot2 = dens(PG1$player.contribution[PG1$team=="2"], xlim=c(0,100) , xlab="Contribution", show.HPDI=0.50, col="red")
+# 
+# plot1 = dens(PG1$player.contribution[PG1$team=="1"], xlim=c(0,100) , xlab="Contribution", show.HPDI=0.50, add=TRUE)
+# 
+# #Density plots for round 2, including HPDI
+# plot3 = dens(PG2$player.contribution[PG2$team=="2"], xlim=c(0,100) , xlab="Contribution", show.HPDI=0.50, col="red")
+# 
+# plot4 = dens(PG2$player.contribution[PG2$team=="1"], xlim=c(0,100) , xlab="Contribution", show.HPDI=0.50, add=TRUE)
+# 
+
+
 
 
 ```
